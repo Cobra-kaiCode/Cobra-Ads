@@ -72,24 +72,27 @@
         webapp.expand(); 
 
         function startVerification() {
-            // Your Monetag direct link
-            window.open("https://omg10.com/4/10644290", "_blank");
+    webapp.openLink("https://omg10.com/4/10644290");
 
-            document.getElementById('visitBtn').style.display = 'none';
-            document.getElementById('timer-box').style.display = 'block';
+    // ⏳ Delay timer start (important)
+    setTimeout(() => {
+        document.getElementById('visitBtn').style.display = 'none';
+        document.getElementById('timer-box').style.display = 'block';
 
-            let timeLeft = 10;
-            const timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('seconds').innerText = timeLeft;
+        let timeLeft = 10;
 
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    document.getElementById('timer-box').style.display = 'none';
-                    document.getElementById('unlockBtn').style.display = 'block';
-                }
-            }, 1000);
-        }
+        const timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('seconds').innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                document.getElementById('timer-box').style.display = 'none';
+                document.getElementById('unlockBtn').style.display = 'block';
+            }
+        }, 1000);
+    }, 1500); // 🔥 important delay
+}
 
         function finishVerification() {
             // Send the signal back to the bot
