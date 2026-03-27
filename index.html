@@ -78,9 +78,8 @@
     const timerBox = document.getElementById("timer-box");
     const secondsText = document.getElementById("seconds");
 
-    // STEP 1: Visit link
+    // ================== STEP 1 ================== //
     visitBtn.onclick = () => {
-        // ✅ SAFE OPEN (keeps app alive)
         window.open("https://omg10.com/4/10644290", "_blank");
 
         visitBtn.style.display = "none";
@@ -100,22 +99,23 @@
         }, 1000);
     };
 
-    // STEP 2: Send data to bot
+    // ================== STEP 2 (FIXED) ================== //
     unlockBtn.onclick = () => {
-        console.log("Sending data to bot...");
 
-        try {
-            tg.sendData("file_unlocked");
+        const params = new URLSearchParams(window.location.search);
+        const startParam = params.get("start");
 
-            // ✅ give time before closing
-            setTimeout(() => {
-                tg.close();
-            }, 1200);
-
-        } catch (err) {
-            alert("Error sending data. Please try again.");
-            console.error(err);
+        if (!startParam) {
+            alert("❌ Invalid or missing link parameter!");
+            return;
         }
+
+        const botUsername = "Yun_WangshuBot"; // ✅ YOUR BOT
+
+        const tgLink = `https://t.me/${botUsername}?start=${startParam}`;
+
+        // ✅ Redirect to bot with start param
+        window.location.href = tgLink;
     };
 </script>
 
