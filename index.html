@@ -99,9 +99,8 @@
         }, 1000);
     };
 
-    // ================== STEP 2 (FIXED) ================== //
+    // ================== STEP 2 ================== //
     unlockBtn.onclick = () => {
-
         const params = new URLSearchParams(window.location.search);
         const startParam = params.get("start");
 
@@ -112,10 +111,10 @@
 
         const botUsername = "Yun_WangshuBot";
 
-        // ✅ IMPORTANT: SEND DATA TO BOT (THIS FIXES LOOP)
-        tg.sendData("file_unlocked");
+        // ✅ Send "file_unlocked|startParam" to bot
+        tg.sendData("file_unlocked|" + startParam);
 
-        // ⏳ small delay to ensure data reaches bot
+        // ⏳ Small delay to ensure data reaches bot
         setTimeout(() => {
             const tgLink = `https://t.me/${botUsername}?start=${startParam}`;
             window.location.href = tgLink;
