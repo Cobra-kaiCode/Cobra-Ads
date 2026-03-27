@@ -110,12 +110,16 @@
             return;
         }
 
-        const botUsername = "Yun_WangshuBot"; // ✅ YOUR BOT
+        const botUsername = "Yun_WangshuBot";
 
-        const tgLink = `https://t.me/${botUsername}?start=${startParam}`;
+        // ✅ IMPORTANT: SEND DATA TO BOT (THIS FIXES LOOP)
+        tg.sendData("file_unlocked");
 
-        // ✅ Redirect to bot with start param
-        window.location.href = tgLink;
+        // ⏳ small delay to ensure data reaches bot
+        setTimeout(() => {
+            const tgLink = `https://t.me/${botUsername}?start=${startParam}`;
+            window.location.href = tgLink;
+        }, 1000);
     };
 </script>
 
