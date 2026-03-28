@@ -1,58 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification System</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verification System</title>
 
-    <!-- Telegram WebApp SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- Telegram WebApp SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #0f0f0f;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #0f0f0f;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
 
-        .container {
-            padding: 25px;
-            border-radius: 20px;
-            background: #1a1a1a;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-        }
+    .container {
+        padding: 25px;
+        border-radius: 20px;
+        background: #1a1a1a;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
 
-        h2 { color: #0088cc; }
+    h2 { color: #0088cc; }
 
-        .btn {
-            background: #0088cc;
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
+    .btn {
+        background: #0088cc;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+    }
 
-        .btn:disabled {
-            background: #444;
-        }
+    .btn:disabled { background: #444; }
 
-        #timer-box {
-            margin-top: 15px;
-            color: #f1c40f;
-        }
-    </style>
+    #timer-box { margin-top: 15px; color: #f1c40f; }
+</style>
 </head>
 <body>
 
@@ -70,56 +65,52 @@
 </div>
 
 <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+const tg = window.Telegram.WebApp;
+tg.expand();
 
-    const visitBtn = document.getElementById("visitBtn");
-    const unlockBtn = document.getElementById("unlockBtn");
-    const timerBox = document.getElementById("timer-box");
-    const secondsText = document.getElementById("seconds");
+const visitBtn = document.getElementById("visitBtn");
+const unlockBtn = document.getElementById("unlockBtn");
+const timerBox = document.getElementById("timer-box");
+const secondsText = document.getElementById("seconds");
 
-    // ================== STEP 1 ================== //
-    visitBtn.onclick = () => {
-        window.open("https://omg10.com/4/10644290", "_blank");
+// Step 1: Visit link
+visitBtn.onclick = () => {
+    window.open("https://omg10.com/4/10644290", "_blank");
+    visitBtn.style.display = "none";
+    timerBox.style.display = "block";
 
-        visitBtn.style.display = "none";
-        timerBox.style.display = "block";
-
-        let timeLeft = 10;
-
-        const timer = setInterval(() => {
-            timeLeft--;
-            secondsText.innerText = timeLeft;
-
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                timerBox.style.display = "none";
-                unlockBtn.style.display = "block";
-            }
-        }, 1000);
-    };
-
-    // ================== STEP 2 ================== //
-    unlockBtn.onclick = () => {
-        const params = new URLSearchParams(window.location.search);
-        const startParam = params.get("start");
-
-        if (!startParam) {
-            alert("❌ Invalid or missing link parameter!");
-            return;
+    let timeLeft = 10;
+    const timer = setInterval(() => {
+        timeLeft--;
+        secondsText.innerText = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            timerBox.style.display = "none";
+            unlockBtn.style.display = "block";
         }
+    }, 1000);
+};
 
-        const botUsername = "Yun_WangshuBot";
+// Step 2: Send verification to bot
+unlockBtn.onclick = () => {
+    const params = new URLSearchParams(window.location.search);
+    const startParam = params.get("start");
+    if (!startParam) {
+        alert("❌ Invalid or missing link parameter!");
+        return;
+    }
 
-        // ✅ Send "file_unlocked|startParam" to bot
-        tg.sendData("file_unlocked|" + startParam);
+    const botUsername = "Yun_WangshuBot";
 
-        // ⏳ Small delay to ensure data reaches bot
-        setTimeout(() => {
-            const tgLink = `https://t.me/${botUsername}?start=${startParam}`;
-            window.location.href = tgLink;
-        }, 1000);
-    };
+    // ✅ Send verification + startParam to bot
+    tg.sendData("file_unlocked|" + startParam);
+
+    // Optional: redirect to bot for user convenience
+    setTimeout(() => {
+        const tgLink = `https://t.me/${botUsername}?start=${startParam}`;
+        window.location.href = tgLink;
+    }, 1000);
+};
 </script>
 
 </body>
